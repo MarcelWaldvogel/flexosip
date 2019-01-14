@@ -1,0 +1,5 @@
+*.o
+demo
+cowbell.ini
+flexosip.a
+inih

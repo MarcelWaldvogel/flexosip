@@ -1,0 +1,9 @@
+[registration]
+uri         = sip:cow-bell@fritz.box
+registrar   = sip:fritz.box
+login       = cow-bell
+password    = SECRET
+
+[alert]
+destination = sip:**9@fritz.box
+name        = Door bell
