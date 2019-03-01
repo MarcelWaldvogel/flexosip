@@ -1,6 +1,6 @@
 flexosip - A more flexible layer over the eXtended osip library.
 Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
-Copyright (C) 2018 Marcel Waldvogel <waldvogel@netfuture.ch>
+Copyright (C) 2018-2019 Marcel Waldvogel <waldvogel@netfuture.ch>
 
 flexosip is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
