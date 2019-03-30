@@ -578,6 +578,7 @@ int fesip_call(const char *from, const char *to, const char *subject,
     return -1;
   }
   osip_message_set_supported(invite, "100rel");
+  osip_message_set_header(invite, "Alert-Info", "<urn:alert:source:external>");
 
   cid = eXosip_call_send_initial_invite(ctx, invite);
   if (cid > 0) {
