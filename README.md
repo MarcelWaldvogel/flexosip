@@ -44,6 +44,7 @@ sudo apt install libosip2-dev libc-ares-dev libortp-dev libsndfile1-dev libinih-
 Building is complicated by the fact that `libosip2` shipped in an OS released
 in 2020 is still version 4.1.0 from 2013, so we need to check out a compatible
 version as well…
+
 ```sh
 git clone https://git.savannah.nongnu.org/git/exosip.git
 cd exosip && git checkout 4.1.0 && ./configure && make && make install
@@ -63,11 +64,18 @@ sudo apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev libini
 
 ### Installation on Raspbian Stretch
 
-`libinih` is not part of Debian Stretch, so we need to compile it ourselves; built using `meson`.
+`libinih` is not part of Debian Stretch (and thus, Raspbian Stretch). Having
+the source code in an `inih/` **sub**subdirectory will build and link it as
+part of `make` in this directory.
 
 ```sh
-sudo apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev meson
+sudo apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev
 git clone https://github.com/benhoyt/inih
+```
+
+Optional: If you also want to make `inih` available system-wide, you can run:
+```sh
+sudo apt install meson
 cd inih && meson setup build -Ddistro_install=true && cd build && sudo ninja install
 ```
 
