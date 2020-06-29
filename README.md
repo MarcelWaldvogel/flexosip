@@ -10,27 +10,73 @@ Instead, it limits the use cases, trying to make the interface
 easier. Unfortunately, I did not find anything pronouncible
 denoting comfort and ending in *-exo*.
 
-It uses [`eXosip`](http://www.antisip.com/doc/exosip2),
-[`oRTP`](http://www.linphone.org/docs/ortp/), and
+It uses [`eXosip`](https://www.antisip.com/doc/exosip2),
+[`oRTP`](https://www.linphone.org/docs/ortp/), and
 [`libsndfile`](http://www.mega-nerd.com/libsndfile/) to provide
 basic single-channel SIP functionality for building your own simple
 devices and/or applications.
 
-## Installation
+For your convenience, here are also links to the source code:
+* [`eXosip` source](https://savannah.nongnu.org/git/?group=exosip)
+* [`oRTP` source](https://gitlab.linphone.org/BC/public/ortp),
+  [mirror](https://github.com/BelledonneCommunications/ortp)
+* [`libsndfile` source](https://github.com/erikd/libsndfile/)
 
-### Installation on Ubuntu 18.10
+## Installation: Preconditions and building
+
+To create the library, just run `make`. However, installing the dependencies
+**beforehand** is — depending on the distribution you are running — more
+complicated:
+
+### Installation on Ubuntu 20.04
+
+The [eXoSIP library](https://savannah.nongnu.org/projects/exosip/) was dropped
+from the repository, so you need to
+[download](https://download.savannah.nongnu.org/releases/exosip/) or
+[`git clone`](https://savannah.nongnu.org/git/?group=exosip) it yourself and
+then compile and install it yourself.
+
+But first, we must install the dependent libraries:
+```sh
+sudo apt install libosip2-dev libc-ares-dev libortp-dev libsndfile1-dev libinih-dev automake
+```
+
+Building is complicated by the fact that `libosip2` shipped in an OS released
+in 2020 is still version 4.1.0 from 2013, so we need to check out a compatible
+version as well…
 
 ```sh
-apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev libinih-dev
+git clone https://git.savannah.nongnu.org/git/exosip.git
+cd exosip && git checkout 4.1.0 && ./configure && make && make install
+```
+
+### Installation on Ubuntu 18.04/18.10/19.10
+
+```sh
+sudo apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev libinih-dev
+```
+
+### Installation on Raspbian Buster
+
+```sh
+sudo apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev libinih-dev
 ```
 
 ### Installation on Raspbian Stretch
 
-`libinih` is not part of Debian Stretch, so we need to compile it ourselves.
+`libinih` is not part of Debian Stretch (and thus, Raspbian Stretch). Having
+the source code in an `inih/` **sub**subdirectory will build and link it as
+part of `make` in this directory.
 
 ```sh
-apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev
+sudo apt install libexosip2-dev libc-ares-dev libortp-dev libsndfile1-dev
 git clone https://github.com/benhoyt/inih
+```
+
+Optional: If you also want to make `inih` available system-wide, you can run:
+```sh
+sudo apt install meson
+cd inih && meson setup build -Ddistro_install=true && cd build && sudo ninja install
 ```
 
 ## Why another SIP library?
